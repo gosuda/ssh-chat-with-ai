@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  stream-ai-message-sender:
+    build: .
+    container_name: stream-ai-message-sender
+    restart: unless-stopped
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GRPC_SERVER_ADDRESS=${GRPC_SERVER_ADDRESS:-host.docker.internal:3333}
+      - GRPC_TLS_TARGET_NAME=${GRPC_TLS_TARGET_NAME:-localhost}
+    volumes:
+      # Mount TLS certificates directory if they need to be updated
+      - ./certs:/app/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ssh-chat-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  ssh-chat-network:
+    external: true

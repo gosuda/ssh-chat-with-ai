@@ -1,0 +1,21 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+.venv-win/
+
+# Test related
+*.pub.org
+*.key.org
+*.pub.test
+*.key.test
+
+# Secrets
+*.key
+.env

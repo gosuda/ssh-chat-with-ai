@@ -1,0 +1,11 @@
+*.pub.test
+*.key.test
+*.pub.org
+*.key.org
+*.pub
+*.key
+scripts/README.md
+conf/*.json
+.env
+
+__pycache__/
